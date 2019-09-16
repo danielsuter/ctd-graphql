@@ -5,7 +5,7 @@ const {employees, projects} = require("../data/employees");
 const typeDefs = gql`
     type Query {
         info: String!
-        employees: [Employee!]!
+        employees("Zero based offset for paging." offset: Int, "Amount of employees." limit: Int): [Employee!]!
     }
 
     type Mutation {
@@ -32,7 +32,12 @@ const typeDefs = gql`
 const resolvers = {
     Query: {
         info: () => 'GraphQL CTD 2019',
-        employees: () => employees,
+        employees: (parent, {offset, limit}) => {
+            if (offset || limit) {
+                return employees.slice(offset || 0, offset + (limit || employees.length));
+            }
+            return employees;
+        },
     },
     Mutation: {
         addEmployee: (parent, {firstname, lastname, hobbies}, context, info) => {
