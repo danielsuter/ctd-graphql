@@ -1,4 +1,4 @@
-const {ApolloServer, gql} = require('apollo-server');
+const {ApolloServer, gql, UserInputError} = require('apollo-server');
 const employees = require("../data/employees").employees;
 
 
@@ -10,6 +10,7 @@ const typeDefs = gql`
 
     type Mutation {
         addEmployee(firstname: String!, lastname: String!, hobbies: [String!]): Employee!
+        updateEmployee(id: ID!, firstname: String, lastname: String, hobbies: [String!]): Employee!
     }
 
     type Employee {
@@ -36,6 +37,17 @@ const resolvers = {
             };
             employees.push(newEmployee);
             return newEmployee;
+        },
+        updateEmployee: (parent, {id, firstname, lastname, hobbies}) => {
+            const employeeToUpdate = employees.find(employee => employee.id === id);
+            if (employeeToUpdate) {
+                employeeToUpdate.firstname = firstname || employeeToUpdate.firstname;
+                employeeToUpdate.lastname = lastname || employeeToUpdate.lastname;
+                employeeToUpdate.hobbies = hobbies || employeeToUpdate.hobbies;
+            } else {
+                throw new UserInputError(`User with ID ${id} not found.`);
+            }
+            return employeeToUpdate;
         },
     },
 
