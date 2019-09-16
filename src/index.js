@@ -1,5 +1,5 @@
 const {ApolloServer, gql, UserInputError} = require('apollo-server');
-const employees = require("../data/employees").employees;
+const {employees, projects} = require("../data/employees");
 
 
 const typeDefs = gql`
@@ -19,6 +19,13 @@ const typeDefs = gql`
         lastname: String!
         fullname: String!
         hobbies: [String!]!
+        projects: [Project!]!
+    }
+
+    type Project {
+        id: ID!
+        name: String!
+        technologies: [String!]!
     }
 `;
 
@@ -54,6 +61,9 @@ const resolvers = {
     Employee: {
         hobbies: (parent) => parent.hobbies || [],
         fullname: (parent) => parent.firstname + ' ' + parent.lastname,
+        projects: (employee) =>
+            projects.filter(project => employee.projectIds.some(projectId => projectId === project.id)),
+
     }
 };
 
