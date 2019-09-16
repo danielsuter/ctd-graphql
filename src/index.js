@@ -16,6 +16,7 @@ const typeDefs = gql`
         id: ID!
         firstname: String!
         lastname: String!
+        fullname: String!
         hobbies: [String!]!
     }
 `;
@@ -40,6 +41,7 @@ const resolvers = {
 
     Employee: {
         hobbies: (parent) => parent.hobbies || [],
+        fullname: (parent) => parent.firstname + ' ' + parent.lastname,
     }
 };
 
