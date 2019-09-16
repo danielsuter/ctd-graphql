@@ -1,14 +1,28 @@
 const {ApolloServer, gql} = require('apollo-server');
+const employees = require("../data/employees").employees;
+
 
 const typeDefs = gql`
     type Query {
         info: String!
+        employees: [Employee!]!
+    }
+
+    type Employee {
+        id: ID!
+        firstname: String!
+        lastname: String!
+        hobbies: [String!]!
     }
 `;
 
 const resolvers = {
     Query: {
         info: () => 'GraphQL CTD 2019',
+        employees: () => employees,
+    },
+    Employee: {
+        hobbies: (parent) => parent.hobbies || [],
     }
 };
 
