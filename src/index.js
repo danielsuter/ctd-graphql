@@ -8,6 +8,10 @@ const typeDefs = gql`
         employees: [Employee!]!
     }
 
+    type Mutation {
+        addEmployee(firstname: String!, lastname: String!, hobbies: [String!]): Employee!
+    }
+
     type Employee {
         id: ID!
         firstname: String!
@@ -21,6 +25,19 @@ const resolvers = {
         info: () => 'GraphQL CTD 2019',
         employees: () => employees,
     },
+    Mutation: {
+        addEmployee: (parent, {firstname, lastname, hobbies}, context, info) => {
+            const newEmployee = {
+                id: employees.length.toString(),
+                firstname,
+                lastname,
+                hobbies: hobbies || [],
+            };
+            employees.push(newEmployee);
+            return newEmployee;
+        },
+    },
+
     Employee: {
         hobbies: (parent) => parent.hobbies || [],
     }
