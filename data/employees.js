@@ -1,20 +1,19 @@
 const employees = [{
-    id: 0,
+    id: '0',
     firstname: 'Hugo',
     lastname: 'Walker',
     hobbies: ['Dart', 'Computer'],
     projectIds: ['P1'],
 }, {
-    id: 1,
+    id: '1',
     firstname: 'Quentin',
     lastname: 'Tarantino',
     hobbies: ['Movies',],
     projectIds: ['P1', 'P2'],
 }, {
-    id: 2,
+    id: '2',
     firstname: 'Paul',
     lastname: 'Hobyless',
-    hobbies: [],
     projectIds: [],
 },];
 
