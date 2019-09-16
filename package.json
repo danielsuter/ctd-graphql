@@ -2,15 +2,20 @@
   "name": "ctd-graphql",
   "version": "1.0.0",
   "description": "Demo project for CTD 2019.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "start:watch": "supervisor --watch src --extensions js,graphql src/index.js"
   },
   "keywords": [],
   "author": "danielsuter",
+  "repository": "https://github.com/danielsuter/ctd-graphql",
   "license": "ISC",
   "dependencies": {
     "apollo-server": "^2.9.3",
     "graphql": "^14.5.6"
+  },
+  "devDependencies": {
+    "supervisor": "^0.12.0"
   }
 }
